@@ -1,5 +1,6 @@
 const ProxyManager = require('./ProxyManager');
 
+
 const tryScraping = async (urls, pageCrawler, attemptsMade = 0) => {
   if (attemptsMade > 4) {
     console.log('​tryScraping -> attemptsMade - MAXIMUM');
