@@ -1,8 +1,9 @@
 const puppeteer = require('puppeteer');
 const PuppeteerScraper = require('./PuppeteerScraper');
+const CarController = require('../Controllers/CarController');
 
 const thisYear = new Date().getFullYear();
-const URL = `https://www.hemmings.com/classifieds/?adtypeFacet=Vehicles for Sale&seller_typeFacet[]=Private Seller&seller_typeFacet[]=Dealer&year_min=1900&year_max=${thisYear - 30}&has_imagesFacet=true&has_priceFacet=true`;
+const URL = `https://www.hemmings.com/classifieds/?adtypeFacet=Vehicles for Sale&seller_typeFacet[]=Private Seller&seller_typeFacet[]=Dealer&year_min=1900&year_max=${thisYear - 30}`;
 const PAGE_SIZE = 60;
 let totalNumberItems = 0;
 const pagesPerBrowserWindow = 1; // SHOULD BE 3
@@ -80,8 +81,8 @@ const crawlAllPageUrls = (pBrowser, providedUrls) => {
       }
       try {
         console.log('pageCrawler -> goto Page', providedUrls[urlIndex]);
-        // await page.goto(providedUrls[urlIndex], { timeout: 50000 });
-        await page.goto(providedUrls[urlIndex], { timeout: 0, waitUntil: 'domcontentloaded' });
+        await page.goto(providedUrls[urlIndex], { timeout: 60000 });
+        // await page.goto(providedUrls[urlIndex], { timeout: 0, waitUntil: 'domcontentloaded' });
         console.log('Page loaded ... Lets evaluate');
         const pageData = await page.evaluate(classifiedPage);
         data.count = pageData.count;
@@ -140,8 +141,11 @@ const crawlAll = () => {
 // JUST FOR TESTING - ONE PAGE
 totalNumberItems = 40;
         }
-        console.log('​crawlNextBrowserWindow -> resultData.cars', resultData.cars);
+
         if (resultData && resultData.cars.length) {
+
+          console.log('​crawlNextBrowserWindow -> resultData.cars', resultData.cars);
+          CarController.addCars(resultData.cars);
           /*
                 AT THIS POINT IT HAS DATA - SHOULD ADD TO DB. ONLY IF NEW VEHICLES SHOULD IT CONTINUE.
           */
