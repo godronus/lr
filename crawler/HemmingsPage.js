@@ -167,7 +167,7 @@ totalNumberItems = 40;
 
 const HemmingsPage = {
   pageCrawler,
-  crawlAll,
+  crawlAll, // used and works..
 };
 
 module.exports = HemmingsPage;
