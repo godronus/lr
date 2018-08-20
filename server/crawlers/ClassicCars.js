@@ -1,12 +1,8 @@
-'use strict';
-
 const cheerio = require('cheerio');
 const request = require('request');
 const BASE_URL = 'https://classiccars.com/listings/find/1900-1988?ps=60&s=datelisted';
-// 'p=1....4'
-const totalPages = 0;
 
-const getData = (url) => new Promise((resolve, reject) => {
+const getPageData = (url) => new Promise((resolve, reject) => {
   request(url, (error, response, html) => {
     if (error || response.statusCode !== 200) reject({ error: 'classiccars.com not responding...' });
     const $ = cheerio.load(html);
@@ -41,21 +37,35 @@ const getAllUrls = () => new Promise((resolve, reject) => {
   });
 });
 
+const sleep = (seconds) => new Promise((resolve, reject) => {
+  if (!seconds || seconds > 30 || isNaN(parseInt(seconds)))
+    reject({error: 'sleep needs seconds provided as a Number <= 20'})
+  setTimeout(resolve, seconds * 1000);
+});
+
+const sleepRdm = () => {
+  ///////////////////////////// TESTING ////////////////////////////
+  // return sleep(Math.floor((Math.random() * 30) + 1));
+  // Should be using a longer sleep pattern when fetching them all.. Save slamming website
+  return sleep(Math.floor((Math.random() * 3) + 1));
+///////////////////////////// TESTING ////////////////////////////
+};
+
 const fetchAllPages = (allUrls) => new Promise((resolve, reject) => {
   if (!allUrls.length) reject({error: 'No urls found to fetch'});
 
-// testing - just fetch 3 pages -
-
+// testing - just fetch 3 pages - START
   allUrls = allUrls.slice(0, 3);
+// testing - just fetch 3 pages - END
+
   let fetchedData = [];
   const fetchNextPage = async (remainingUrls) => {
     if (remainingUrls.length === 0) resolve(fetchedData);
     try {
       const nextPageUrl = remainingUrls.shift();
-      const nextPageData = await getData(nextPageUrl);
+      const nextPageData = await getPageData(nextPageUrl);
       fetchedData = fetchedData.concat(nextPageData);
-      console.log('​fetchNextPage -> fetchedData >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', fetchedData.length);
-      await sleep(2);
+      await sleepRdm();
       fetchNextPage(remainingUrls);
     }
     catch(error) {
@@ -65,22 +75,19 @@ const fetchAllPages = (allUrls) => new Promise((resolve, reject) => {
   fetchNextPage(allUrls);
 });
 
-const displayDataJSON = async (req, res, next) => {
-
+const getData = () => new Promise(async (resolve, reject) => {
   try {
     const allUrls = await getAllUrls();
     const retData = await fetchAllPages(allUrls);
-    res.status(200).send(retData);
+    resolve(retData);
   }
   catch (error) {
-    res.status(400).send(error);
-    next();
+    reject(error);
   }
-};
+});
 
 const ClassicCars = {
   getData,
-  displayDataJSON,
 };
 
 module.exports = ClassicCars;

@@ -20,6 +20,7 @@ const getCarInfo = (heading) => {
 
 const addCars = (carsArr) => {
   console.log('I am in ADD CARS... >>>>>>>>>>>>>>>>>>>>>>>>');
+
   const carObjects = carsArr.map((car) => {
     const carInfo = getCarInfo(car.heading);
     return {

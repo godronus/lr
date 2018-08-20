@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const scraperController = require('../Controllers/ScraperController');
 const bodyParser = require('body-parser');
+
+const scraperController = require('./Controllers/ScraperController');
+const carController = require('./Controllers/CarController');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -14,12 +16,13 @@ mongoose.connection.once('open', () => {
   console.log('Connected to Database');
 });
 
-// // first sample route
-app.get('/scrape',
-  scraperController.getData,
+// TESTING ROUTES - These should be called on interval - This allows forcing a fetch
+app.get('/scrapeClassicCars',
+  scraperController.getClassicCarData,
+  carController.addCars,
   (req, res, next) => {
     res.status(200).end();
-  }
+  },
 );
 
 app.listen(3000);
