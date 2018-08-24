@@ -48,7 +48,7 @@ app.post('/classifieds/search',
   carController.findCars,
   (req, res, next) => {
     res.status(200).send(res.locals);
-  },
+  }
 );
 
 // TESTING ROUTES - These should be called on interval - This allows forcing a fetch
@@ -59,13 +59,13 @@ app.get('/scrapeClassicCars',
   carController.removeOld,
   (req, res, next) => {
     res.status(200).send(res.locals);
-  },
+  }
 );
 
 var port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`Listening on Port ${port}`);
+  console.log('Server Listening on ' + port);
 });
 
 
