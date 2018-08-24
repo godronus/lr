@@ -62,8 +62,12 @@ app.get('/scrapeClassicCars',
   },
 );
 
-app.listen(3000);
+var port = process.env.PORT || 3000;
 
-console.log('Listening on Port 3000');
+app.listen(port, () => {
+  console.log(`Listening on Port ${port}`);
+});
+
+
 
 module.exports = app;
