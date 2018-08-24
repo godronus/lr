@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <% include ../partials/head %>
+  <title> <%= title %> - Classifieds</title>
+  <link rel="stylesheet" href="/styles/classifieds.css">
+</head>
+<body class="container">
+  <header>
+      <% include ../partials/header %>
+  </header>
+
+  <main>
+    <% include ../partials/page-defaults %>
+    <div id="result-list" class="row justify-content-center my-4">
+      <!-- Dynamically load content here -->
+    </div>
+  </main>
+
+  <footer>
+      <% include ../partials/footer %>
+  </footer>
+  <script>
+      const searchCriteria = <%- searchCriteria %>;
+      let classifiedsObj = {};
+  </script>
+  <script src="/scripts/utilities.js"></script>
+  <script src="/scripts/classifieds.js"></script>
+  <script src="/scripts/page-defaults.js"></script>
+</body>
+</html>
