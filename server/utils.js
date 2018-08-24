@@ -12,9 +12,9 @@ const utils = {
 
   sleepRdm() {
     ///////////////////////////// TESTING ////////////////////////////
-    // return sleep(Math.floor((Math.random() * 30) + 3));
+    return sleepTimer(Math.floor((Math.random() * 30) + 3));
     // Should be using a longer sleep pattern when fetching them all.. Save slamming website
-    return sleepTimer(Math.floor((Math.random() * 3) + 1));
+    // return sleepTimer(Math.floor((Math.random() * 3) + 1));
   ///////////////////////////// TESTING ////////////////////////////
   },
 

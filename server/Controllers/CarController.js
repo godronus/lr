@@ -144,13 +144,13 @@ const findCars = (req, res, next) => {
   let limit = searchCriteria.pageNum + searchCriteria.pageSize;
 
   Car.find(query, (err, results) => {
-    console.log('​findCars -> query', query);
+// console.log('​findCars -> query', query);
     if (err) {
       console.log('Error: Unable to findCars... CarController.findCars()');
       return;
     }
     res.locals.totalItems = results.length;
-    console.log('​findCars -> results.length', results.length);
+// console.log('​findCars -> results.length', results.length);
     res.locals.cars = results.slice(skip, limit);
     if (results.length < searchCriteria.pageSize) {
       // fill page with results from nearby years +- 5yrs

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  console.log('searchCriteria', searchCriteria);
+// console.log('searchCriteria', searchCriteria);
 // Initialise Page
   $(`.pg-${searchCriteria.pageSize}`).addClass('underline');
 

@@ -27,7 +27,7 @@ const createAdvert = ((car) => {
 })();
 
 const classifiedSearchUrl = (criteria) => {
-  console.log('​classifiedSearchUrl -> criteria', criteria);
+  // console.log('​classifiedSearchUrl -> criteria', criteria);
   const criteriaMap = {
     searchPhrase: 'sP',
     pageNum: 'pg',
